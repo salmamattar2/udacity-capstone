@@ -1,13 +1,13 @@
 # Udacity Cloud DevOps Engineer Capstone Project
 
-> In this project, I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS which uses Blue/Green Deployment.
+In this project, I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS which uses Blue/Green Deployment.
 
 Blue Green Deployment depends on the following concept:
 
 We have two hardware environments that are configured exactly the same way. New code is released to the inactive environment, where it is thoroughly tested. Once the code is okay, the the idle environment is made active by adjusting a router configuration to redirect application program traffic.
 
 
-> To be able to use this CI/CD pipeline you will need to install:
+To be able to use the CI/CD pipeline you will need to install:
 
 * Jenkins
 * Blue Ocean Plugin in Jenkins

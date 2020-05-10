@@ -7,13 +7,23 @@ pipeline {
 				sh 'tidy -q -e *.html'
 			}
 		}
-		/*
-		stage('Build and Push Docker Image') {
+		
+		stage('Build Docker Image') {
 			steps {
-				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-credentials',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']
-]){
 					sh '''
 						docker build --tag=salmamattar/udacity-capstone .
+					'''
+				
+			}
+		}
+		,
+
+		stage('Push Docker Image to dockerhub ') {
+			
+			steps {
+			withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-credentials',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+			{
+					sh '''
 						docker login --username $USERNAME --password $PASSWORD
 						docker push salmamattar/udacity-capstone
 
@@ -21,66 +31,20 @@ pipeline {
 				}
 			}
 		}
+		,
 
-
-*/
-		stage('Set current kubectl context') {
+		stage('Deply to AWS cluster') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'aws-credentials') {
-					sh '''
-						kubectl config --kubeconfig=kubeconf.yaml
+					sh '''					
+						kubectl run udacity-capostone  --image=jenkins.dkr.ecr.us-west-2.amazonaws.com/udacity-capostone:latest --kubeconfig=kubeconf.yaml"
 					'''
 				}
 			}
 		}
-
 	
 
-		stage('Deploy blue container') {
-			steps {
-				withAWS(region:'us-west-2', credentials:'aws-credentials') {
-					sh '''
-						kubectl apply -f ./blue-controller.json
-					'''
-				}
-			}
-		}
 
-		stage('Deploy green container') {
-			steps {
-				withAWS(region:'us-west-2', credentials:'aws-credentials') {
-					sh '''
-						kubectl apply -f ./green-controller.json
-					'''
-				}
-			}
-		}
-
-		stage('Create the service in the cluster, redirect to blue') {
-			steps {
-				withAWS(region:'us-west-2', credentials:'aws-credentials') {
-					sh '''
-						kubectl apply -f ./blue-service.json
-					'''
-				}
-			}
-		}
-
-		stage('Wait user approve') {
-            steps {
-                input "Ready to redirect traffic to green?"
-            }
-        }
-
-		stage('Create the service in the cluster, redirect to green') {
-			steps {
-				withAWS(region:'us-west-2', credentials:'aws-credentials') {
-					sh '''
-						kubectl apply -f ./green-service.json
-					'''
-				}
-			}
-		}
-
+		
 	}
 }

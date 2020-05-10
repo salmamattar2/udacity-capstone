@@ -28,7 +28,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''
-						kubectl config use-context udacity-capstone-cluster
+						kubectl config --kubeconfig=kubeconf.yaml
 					'''
 				}
 			}

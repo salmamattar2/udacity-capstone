@@ -7,6 +7,7 @@ pipeline {
 				sh 'tidy -q -e *.html'
 			}
 		}
+		/*
 		stage('Build and Push Docker Image') {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-credentials',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']
@@ -22,12 +23,12 @@ pipeline {
 		}
 
 
-
+*/
 		stage('Set current kubectl context') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''
-						kubectl config use-context arn:aws:eks:us-east-1:142977788479:cluster/udacity-capstone
+						kubectl config use-context arn:aws:eks:us-west-2:348358134113:cluster/udacity-capstone-cluster
 					'''
 				}
 			}
@@ -37,7 +38,7 @@ pipeline {
 
 		stage('Deploy blue container') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-credentials') {
+				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''
 						kubectl apply -f ./blue-controller.json
 					'''
@@ -47,7 +48,7 @@ pipeline {
 
 		stage('Deploy green container') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-credentials') {
+				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''
 						kubectl apply -f ./green-controller.json
 					'''
@@ -57,7 +58,7 @@ pipeline {
 
 		stage('Create the service in the cluster, redirect to blue') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-credentials') {
+				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''
 						kubectl apply -f ./blue-service.json
 					'''
@@ -73,7 +74,7 @@ pipeline {
 
 		stage('Create the service in the cluster, redirect to green') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-credentials') {
+				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''
 						kubectl apply -f ./green-service.json
 					'''

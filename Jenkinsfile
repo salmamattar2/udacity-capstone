@@ -12,7 +12,7 @@ pipeline {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-credentials',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']
 ]){
 					sh '''
-						docker build --tag=udacity-capstone .
+						docker build --tag=salmamattar/udacity-capstone .
 						docker login -u $USERNAME -p $PASSWORD
 						docker push salmamattar/udacity-capstone
 

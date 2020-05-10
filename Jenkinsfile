@@ -7,27 +7,21 @@ pipeline {
 				sh 'tidy -q -e *.html'
 			}
 		}
-		/*
-		stage('Build Docker Image') {
+		stage('Build and Push Docker Image') {
 			steps {
-				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-credentials',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']
+]){
 					sh '''
-						docker build -t mehmetincefidan/capstone .
+						docker build --tag=udacity-capstone
+						docker login -u $USERNAME -p $PASSWORD
+						docker push salmamattar/udacity-capstone
+
 					'''
 				}
 			}
 		}
 
-		stage('Push Image To Dockerhub') {
-			steps {
-				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
-					sh '''
-						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-						docker push mehmetincefidan/capstone
-					'''
-				}
-			}
-		}
+/*
 
 		stage('Set current kubectl context') {
 			steps {

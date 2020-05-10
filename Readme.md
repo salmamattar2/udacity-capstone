@@ -1,10 +1,11 @@
-# Project 5 - Cloud DevOps Engineer Capstone Project
+# Udacity Cloud DevOps Engineer Capstone Project
 
-> In this project, I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS which is Blue/Green Deployment.
+> In this project, I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS which uses Blue/Green Deployment.
 
-Pleas note that the kubernetes cluster was created using EKSCTL not through cloudformation or ansible 
+Blue Green Deployment depends on the following concept:
 
-You can find the used eksctl commands for this task in the file 'kubernetes-cluster-creation.sh'
+We have two hardware environments that are configured exactly the same way. New code is released to the inactive environment, where it is thoroughly tested. Once the code is okay, the the idle environment is made active by adjusting a router configuration to redirect application program traffic.
+
 
 > To be able to use this CI/CD pipeline you will need to install:
 
@@ -17,23 +18,9 @@ You can find the used eksctl commands for this task in the file 'kubernetes-clus
 * Eksctl
 * Kubectl
 
+After the installation of the items above on an EC2 instance you'll need to setup the pipeline in this githubrepo. All required stages are in the JenkinsFile.
 
+IMPORTANT NOTE TO REVIEWER: 
+Please note that the kubernetes cluster was created using EKSCTL not through cloudformation or ansible.
+You can find the used eksctl commands for this task in the file 'kubernetes-cluster-creation.sh'
 
-## The files included are:
-```sh
-* /Images-of-result-deploy : Screenshot the result of deploy.
-* /Create-clusters-pipeline : CloudFormation Script of Cluster Pipeline file 
-* /Deploy-containers-pipeline : Deployment Script of Containers Pipeline file
-* Jenkinsfile : Jenkinsfile for Creating Pipeline
-* Dockerfile : Dockerfile for building the image 
-* green-controller.json : Create a replication controller green pod
-* green-service.json : Create the green service
-* blue-controller.json : Create a replication controller blue pod
-* blue-service.json : Create the blue service
-* index.html : Web site Index file.
-```
-
-## Run the project:
-```sh
-* Please follow to steps of screenshot in Images-of-result-deploy folder.
-```

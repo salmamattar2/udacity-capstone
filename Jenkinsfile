@@ -37,7 +37,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''					
-						kubectl run udacity-capstone  --image=jenkins.dkr.ecr.us-west-2.amazonaws.com/udacity-capostone:latest --kubeconfig=kubeconf.yaml"
+						kubectl run udacity-capstone-cluster  --image=jenkins.dkr.ecr.us-west-2.amazonaws.com/udacity-capstone-cluster:latest --kubeconfig=kubeconf.yaml"
 					'''
 				}
 			}

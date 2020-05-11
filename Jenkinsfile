@@ -30,8 +30,6 @@ pipeline {
 				}
 			}
 		}
-		,
-
 		stage('Deply to AWS cluster') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'aws-credentials') {

@@ -3,11 +3,12 @@ pipeline {
 	stages {
 		stage('Lint HTML') {
 			steps {
-				sh 'tidy -q -e *.html'
+				echo 'hello'
+			/*	sh 'tidy -q -e *.html'*/
 			}
 		}
 	
-
+/*
 		stage('Build and Push Docker Image') {
 			
 			steps {
@@ -33,7 +34,7 @@ pipeline {
 		}
 	
 
-
+*/
 		
 	}
 }

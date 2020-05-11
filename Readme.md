@@ -9,7 +9,7 @@ We have two hardware environments that are configured exactly the same way. New 
 I implemented it on AWS Console following the steps in this tutorial:
 https://docs.aws.amazon.com/codedeploy/latest/userguide/applications-create-blue-green.html   
 
-The flow works as follows:
+The flow works as follows: <br/>
 1- Start with already deployed containers (Deployment) and service.<br />
 2- Deploy new deployment<br />
 3- Issue a health check<br />

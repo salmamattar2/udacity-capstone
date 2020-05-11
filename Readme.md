@@ -10,10 +10,10 @@ I implemented it on AWS Console following the steps in this tutorial:
 https://docs.aws.amazon.com/codedeploy/latest/userguide/applications-create-blue-green.html   
 
 The flow works as follows:
-1- Start with already deployed containers (Deployment) and service.
-2- Deploy new deployment
-3- Issue a health check
-4- If health check passes, update load balancer and remove old deployment
+1- Start with already deployed containers (Deployment) and service.<br />
+2- Deploy new deployment<br />
+3- Issue a health check<br />
+4- If health check passes, update load balancer and remove old deployment<br />
 5- If health check fails, stop and send Slack alert
 
 Please find attached in the screenshots folder an image for the blue-green deployment.

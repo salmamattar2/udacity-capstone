@@ -1,28 +1,20 @@
 pipeline {
 	agent any
 	stages {
-/*
 		stage('Lint HTML') {
 			steps {
 				sh 'tidy -q -e *.html'
 			}
 		}
-		*/
-		stage('Build Docker Image') {
-			steps {
-					sh '''
-						docker build --tag=salmamattar/udacity-capstone .
-					'''
-				
-			}
-		}
+	
 
-		stage('Push Docker Image to dockerhub ') {
+		stage('Build and Push Docker Image') {
 			
 			steps {
 			withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-credentials',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
 			{
 					sh '''
+						docker build --tag=salmamattar/udacity-capstone .
 						docker login --username $USERNAME --password $PASSWORD
 						docker push salmamattar/udacity-capstone
 
@@ -30,7 +22,7 @@ pipeline {
 				}
 			}
 		}
-		stage('Deply to AWS cluster') {
+		stage('Deply to AWS EKS') {
 			steps {
 				withAWS(region:'us-west-2', credentials:'aws-credentials') {
 					sh '''					
